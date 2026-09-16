@@ -127,3 +127,67 @@ async function fetchCalmingQuote() {
 newQuoteBtn.addEventListener('click', fetchCalmingQuote);
 
 fetchCalmingQuote();
+
+const bookShelf = document.getElementById('bookShelf');
+
+const CALM_BOOK_IDS = '2680,4507,45,46,16,10715,3600,74';
+
+const FALLBACK_BOOKS = [
+  { title: 'Meditations',          authors: 'Marcus Aurelius',     url: 'https://www.gutenberg.org/ebooks/2680' },
+  { title: 'As a Man Thinketh',    authors: 'James Allen',         url: 'https://www.gutenberg.org/ebooks/4507' },
+  { title: 'Anne of Green Gables', authors: 'L. M. Montgomery',    url: 'https://www.gutenberg.org/ebooks/45' },
+  { title: 'The Book of Tea',      authors: 'Kakuzo Okakura',      url: 'https://www.gutenberg.org/ebooks/7001' },
+  { title: 'The Wisdom of Life',   authors: 'Arthur Schopenhauer', url: 'https://www.gutenberg.org/ebooks/10715' },
+];
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderBooks(books) {
+  bookShelf.innerHTML = '';
+
+  books.forEach((book) => {
+    const readUrl =
+      book.formats && (book.formats['text/html'] || book.formats['text/html; charset=utf-8']);
+    const cover = book.formats && book.formats['image/jpeg'];
+
+    const col = document.createElement('div');
+    col.className = 'col-6 col-md-4 col-lg-3';
+    col.innerHTML = `
+      <div class="book-card h-100 text-center">
+        <img class="book-cover mb-2" alt="Cover of ${escapeHtml(book.title)}"
+             src="${cover || 'https://via.placeholder.com/128x192/f6efe6/7fa47b?text=%E2%9D%A6'}" />
+        <h3 class="book-title mb-1">${escapeHtml(book.title)}</h3>
+        <p class="text-muted-soft small mb-2">${escapeHtml(book.authors || 'Unknown')}</p>
+        <a class="btn btn-soft btn-sm" href="${readUrl || book.url || ('https://www.gutenberg.org/ebooks/' + book.id)}"
+           target="_blank" rel="noopener noreferrer">Read now</a>
+      </div>`;
+    bookShelf.appendChild(col);
+  });
+}
+
+async function loadCalmingBooks() {
+  try {
+    const response = await fetch(`https://gutendex.com/books/?ids=${CALM_BOOK_IDS}`);
+    if (!response.ok) throw new Error('Book service responded with ' + response.status);
+
+    const data = await response.json();
+    const books = data.results.map((b) => ({
+      id: b.id,
+      title: b.title,
+      authors: b.authors.map((a) => a.name).join(', '),
+      formats: b.formats,
+    }));
+
+    if (!books.length) throw new Error('No books returned');
+    renderBooks(books);
+  } catch (error) {
+    console.info('Book API unavailable, showing built-in shelf instead. (', error.message, ')');
+    renderBooks(FALLBACK_BOOKS);
+  }
+}
+
+loadCalmingBooks();
