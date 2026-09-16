@@ -1,0 +1,152 @@
+:root {
+  --sage:        #a8c3a0;
+  --sage-deep:   #7fa47b;
+  --ocean:       #a9c5d3;
+  --ocean-deep:  #7ba3b5;
+  --sand:        #f6efe6;
+  --sand-deep:   #ece2d3;
+  --lavender:    #d8d3e8;
+  --ink:         #4a5754;
+  --ink-soft:    #7d8a87;
+  --white-warm:  #fdfbf7;
+  --radius-soft: 1.25rem;
+}
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(160deg, var(--white-warm) 0%, var(--sand) 45%, var(--lavender) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.text-heading   { color: var(--sage-deep) !important; }
+.text-muted-soft{ color: var(--ink-soft) !important; }
+.blockquote-footer { color: var(--ink-soft) !important; }
+
+.letter-spaced { letter-spacing: 0.18em; }
+
+.soft-card {
+  background-color: rgba(253, 251, 247, 0.9);
+  border: 1px solid rgba(168, 195, 160, 0.35);
+  border-radius: var(--radius-soft);
+  box-shadow: 0 8px 30px rgba(74, 87, 84, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.soft-card:hover {
+  box-shadow: 0 12px 36px rgba(74, 87, 84, 0.12);
+  transform: translateY(-2px);
+}
+
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.18em;
+  margin-right: 0.35rem;
+}
+
+.btn-calm {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--ocean) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 2rem;
+  font-weight: 700;
+  transition: opacity 0.25s ease, transform 0.15s ease;
+}
+.btn-calm:hover,
+.btn-calm:focus { color: #ffffff; opacity: 0.88; transform: translateY(-1px); }
+.btn-calm:active { transform: translateY(0); }
+
+.btn-soft {
+  background-color: var(--sand-deep);
+  color: var(--ink);
+  border: 1px solid rgba(168, 195, 160, 0.4);
+  border-radius: 2rem;
+  font-weight: 600;
+}
+.btn-soft:hover { background-color: var(--lavender); color: var(--ink); }
+
+.soft-textarea {
+  border: 1px solid rgba(168, 195, 160, 0.45);
+  border-radius: var(--radius-soft);
+  background-color: rgba(255, 255, 255, 0.75);
+  color: var(--ink);
+  resize: vertical;
+  min-height: 11rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.soft-textarea:focus {
+  border-color: var(--sage-deep);
+  box-shadow: 0 0 0 0.25rem rgba(168, 195, 160, 0.25);
+  color: var(--ink);
+}
+
+.dissolving {
+  transition: opacity 1.6s ease, filter 1.6s ease, transform 1.6s ease;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(-10px) scale(0.98);
+}
+
+.quote-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.quote-text::before { content: "\201C"; color: var(--sage); font-size: 2rem; margin-right: 0.1rem; }
+.quote-text::after  { content: "\201D"; color: var(--sage); font-size: 2rem; margin-left: 0.1rem; }
+
+.fade-in { animation: fadeIn 0.9s ease both; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.breath-stage {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  max-width: 60vw;
+  max-height: 60vw;
+}
+
+.breath-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #cfe3d6 0%, var(--sage) 55%, var(--ocean) 100%);
+  box-shadow: 0 0 30px rgba(168, 195, 160, 0.6),
+              0 0 70px rgba(169, 197, 211, 0.4);
+  transition: transform 4s ease-in-out;
+  will-change: transform;
+}
+
+.breath-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--ink);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  padding: 0 1rem;
+}
+
+body > footer {
+  background-color: rgba(236, 226, 211, 0.6);
+  border-top: 1px solid rgba(168, 195, 160, 0.3);
+}
+
+@media (max-width: 575.98px) {
+  .breath-stage { width: 180px; height: 180px; }
+  .breath-circle { width: 74px; height: 74px; }
+  .quote-text { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breath-circle, .soft-card, .dissolving { transition: none !important; animation: none !important; }
+}
