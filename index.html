@@ -9,14 +9,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 position-relative overflow-x-hidden">
 
-  <header class="py-5 text-center">
+  <div class="bg-animals-container" aria-hidden="true">
+    <svg class="bg-animal capybara-bg float-1" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="60" width="100" height="60" rx="30" fill="var(--sage-deep)" opacity="0.15" />
+      <circle cx="120" cy="75" r="25" fill="var(--sage-deep)" opacity="0.15" />
+      <circle cx="130" cy="70" r="3" fill="var(--ink)" opacity="0.3" />
+      <path d="M40 90 L40 130 M70 90 L70 130 M110 90 L110 130 M130 90 L130 130" stroke="var(--sage-deep)" stroke-width="8" stroke-linecap="round" opacity="0.15" />
+    </svg>
+    <svg class="bg-animal cat-bg float-2" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="75" cy="85" r="35" fill="var(--ocean-deep)" opacity="0.15" />
+      <path d="M50 60 L60 30 L80 55 Z" fill="var(--ocean-deep)" opacity="0.15" />
+      <path d="M100 60 L90 30 L70 55 Z" fill="var(--ocean-deep)" opacity="0.15" />
+      <path class="tail-wag" d="M40 95 Q 10 95 20 65" stroke="var(--ocean-deep)" stroke-width="8" stroke-linecap="round" opacity="0.15" fill="none" />
+    </svg>
+    <svg class="bg-animal dog-bg float-3" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="75" cy="85" rx="40" ry="30" fill="var(--sand-deep)" opacity="0.4" />
+      <circle cx="95" cy="65" r="25" fill="var(--sand-deep)" opacity="0.4" />
+      <path d="M85 50 Q 75 70 80 80" stroke="var(--sand-deep)" stroke-width="12" stroke-linecap="round" opacity="0.4" fill="none" />
+      <path class="tail-wag" d="M40 80 Q 20 70 30 50" stroke="var(--sand-deep)" stroke-width="8" stroke-linecap="round" opacity="0.4" fill="none" />
+    </svg>
+  </div>
+
+  <header class="py-5 text-center position-relative z-1">
     <div class="container">
       <p class="text-uppercase letter-spaced text-muted-soft mb-2 small fw-bold">a gentle corner of the internet</p>
       <h1 class="display-4 fw-bolder text-heading mb-3">Unburdened Space</h1>
@@ -27,7 +46,7 @@
     </div>
   </header>
 
-  <main class="container pb-5">
+  <main class="container pb-5 position-relative z-1">
 
     <section class="mb-5" aria-label="Daily calming quote">
       <div class="card soft-card p-4 p-md-5">
@@ -43,7 +62,6 @@
     </section>
 
     <div class="row g-4 g-lg-5 align-items-stretch">
-
       <section class="col-12 col-lg-6 d-flex" aria-label="Brain dump">
         <div class="card soft-card p-4 p-md-5 w-100 d-flex flex-column">
           <h2 class="h4 fw-bold text-heading mb-1">
@@ -102,7 +120,7 @@
       </section>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center mt-4 mb-5">
       <button id="newQuoteBtn" class="btn btn-soft px-4" type="button">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 21v-8"/><path d="M12 13C12 9 9 7 4 7c0 5 3 7 8 6z"/><path d="M12 13c0-4 3-6 8-6 0 5-3 7-8 6z"/>
@@ -110,7 +128,100 @@
         Another gentle thought
       </button>
     </div>
-     <section class="mt-5" aria-label="Free calming books to read">
+
+    <div class="row g-4 g-lg-5 align-items-stretch mt-3">
+      <section class="col-12 col-lg-6 d-flex" aria-label="Virtual Pet Companion">
+        <div class="card soft-card p-4 p-md-5 w-100 d-flex flex-column align-items-center text-center">
+          <h2 class="h4 fw-bold text-heading mb-3">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 21.5c-4.5 0-7-2.5-7-6.5 0-2.5 1.5-4.5 3-5.5.5-3 2-5 4-5s3.5 2 4 5c1.5 1 3 3 3 5.5 0 4-2.5 6.5-7 6.5z"/>
+            </svg>
+            Gentle Companion
+          </h2>
+          
+          <div id="petSelection" class="mb-4">
+            <p class="text-muted-soft small mb-3">Choose a little friend to keep you company.</p>
+            <div class="d-flex gap-3 justify-content-center">
+              <button class="btn btn-soft" id="chooseCatBtn">Adopt a Cat</button>
+              <button class="btn btn-soft" id="chooseDogBtn">Adopt a Dog</button>
+            </div>
+          </div>
+
+          <div id="petInteractive" class="w-100 d-none flex-column align-items-center">
+            <div id="petAvatar" class="pet-avatar-container mb-4"></div>
+            
+            <div class="w-100 px-md-4 mb-4">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small fw-bold text-muted-soft">Mood</span>
+                <span class="small text-muted-soft" id="moodVal">100%</span>
+              </div>
+              <div class="progress pet-progress mb-3">
+                <div id="moodBar" class="progress-bar bg-sage" role="progressbar" style="width: 100%"></div>
+              </div>
+
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small fw-bold text-muted-soft">Hunger</span>
+                <span class="small text-muted-soft" id="hungerVal">100%</span>
+              </div>
+              <div class="progress pet-progress mb-3">
+                <div id="hungerBar" class="progress-bar bg-ocean" role="progressbar" style="width: 100%"></div>
+              </div>
+
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small fw-bold text-muted-soft">Hygiene</span>
+                <span class="small text-muted-soft" id="hygieneVal">100%</span>
+              </div>
+              <div class="progress pet-progress">
+                <div id="hygieneBar" class="progress-bar bg-lavender" role="progressbar" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-center">
+              <button class="btn btn-calm btn-sm px-3" id="petBtn">Pet</button>
+              <button class="btn btn-calm btn-sm px-3" id="feedBtn">Feed</button>
+              <button class="btn btn-calm btn-sm px-3" id="batheBtn">Bathe</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="col-12 col-lg-6 d-flex" aria-label="Gentle Focus Game">
+        <div class="card soft-card p-4 p-md-5 w-100 d-flex flex-column align-items-center text-center">
+          <h2 class="h4 fw-bold text-heading mb-1">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 12 12 17 22 12"/>
+              <polyline points="2 17 12 22 22 17"/>
+            </svg>
+            Gentle Focus
+          </h2>
+          <p class="text-muted-soft small mb-4">
+            Move the rings to the rightmost pillar. Only place smaller rings on larger ones.
+            Take your time, there is no timer.
+          </p>
+          
+          <div class="hanoi-container d-flex justify-content-between align-items-end w-100 px-2 px-md-4 mb-4" id="hanoiBoard">
+            <div class="hanoi-peg-area" data-peg="0">
+              <div class="hanoi-peg"></div>
+              <div class="hanoi-disks" id="peg-0"></div>
+            </div>
+            <div class="hanoi-peg-area" data-peg="1">
+              <div class="hanoi-peg"></div>
+              <div class="hanoi-disks" id="peg-1"></div>
+            </div>
+            <div class="hanoi-peg-area" data-peg="2">
+              <div class="hanoi-peg"></div>
+              <div class="hanoi-disks" id="peg-2"></div>
+            </div>
+          </div>
+          
+          <div id="hanoiMessage" class="text-sage-deep small fw-bold mb-3 opacity-0">You did it beautifully.</div>
+          <button id="resetHanoiBtn" class="btn btn-soft btn-sm px-4">Reset Puzzle</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="mt-5" aria-label="Free calming books to read">
       <div class="card soft-card p-4 p-md-5">
         <h2 class="h4 fw-bold text-heading mb-1">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -127,9 +238,10 @@
         </div>
       </div>
     </section>
- </main>
 
-  <footer class="mt-auto py-4">
+  </main>
+
+  <footer class="mt-auto py-4 position-relative z-1">
     <div class="container text-center">
       <p class="small text-muted-soft mb-0">
         This is a safe space. Your thoughts are processed locally on your device
